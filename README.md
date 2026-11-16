@@ -21,12 +21,14 @@ The application records payment confirmations. It does not process payment trans
 - **Database:** PostgreSQL.
 - **Access control:** Server-side sessions identify customers and staff. The backend checks request ownership, staff permissions, and allowed status transitions. A request's history records actions such as quote rejection and reassignment.
 
-## My contributions
+## How a repair request works
 
-I implemented the core backend workflow for repair requests, including creation, listing, details, filtering, and finalization. I also implemented the services and endpoints for quotes, repairs, reassignment, and payment confirmation.
+1. A customer submits a request with the equipment, the problem, and a category.
+2. Staff prepare a quote. The customer can approve it, reject it with a reason, or reopen a rejected request.
+3. Staff record the repair and instructions for the customer, or redirect the request to another staff member.
+4. The customer confirms payment, and staff close the request.
 
-I added a shared staff permission check and standardized API error responses. On the frontend, I contributed to the customer dashboard, the request form, and the request details screen. The final frontend integration was a team effort.
-
+The backend validates each status change. Customers can only access their own requests, and while a request is marked as redirected, only the receiving staff member can access it through staff request views. The request history tracks changes throughout the process.
 ## Run locally
 
 Install JDK 25, Node.js 22.12+ within the 22.x release line, npm, and PostgreSQL. Create a PostgreSQL database named `equipment_maintenance` or use an existing local database dedicated to this app.
